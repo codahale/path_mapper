@@ -14,6 +14,14 @@ class PathMapperTests(unittest.TestCase):
   def should_parse_a_static_url(self):
     self.assertEqual({ 'controller': 'home', 'action': 'weebles' }, self.path_mapper.parse('/home'))
   
+  @test
+  def should_raise_an_exception_if_parsing_an_unknown_static(self):
+    try:
+      self.path_mapper.parse('/dingo')
+      self.fail('Should have raised a PathNotFoundError')
+    except NotFoundError, e:
+      self.assertEqual('/dingo not found', e.message)
+  
 def suite():
   return unittest.makeSuite(PathMapperTests)
 
