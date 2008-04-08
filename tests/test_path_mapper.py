@@ -6,9 +6,13 @@ from helpers import test
 from path_mapper import *
 
 class PathMapperTests(unittest.TestCase):
+  def setUp(self):
+    self.path_mapper = PathMapper()
+    self.path_mapper.connect('/home', { 'controller': 'home', 'action': 'weebles' })
+  
   @test
-  def should_have_tests(self):
-    pass
+  def should_parse_a_static_url(self):
+    self.assertEqual({ 'controller': 'home', 'action': 'weebles' }, self.path_mapper.parse('/home'))
   
 def suite():
   return unittest.makeSuite(PathMapperTests)
