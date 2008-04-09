@@ -18,8 +18,11 @@ class PrefixTree(object):
       wildcard matching will be performed.
     """
     super(PrefixTree, self).__init__()
-    self.root = [None, dict()]
-    self.wildcard = wildcard
+    self.__root = [None, dict()]
+    if wildcard:
+      self.__wildcard = hash(wildcard)
+    else:
+      self.__wildcard = None
   
   def get(self, key, default=None):
     """
@@ -32,12 +35,13 @@ class PrefixTree(object):
         >>> tree.get('unknown', 0)
         0
     """
-    node = self.root
+    node = self.__root
     for element in key:
-      if element in node[1]:
-        node = node[1][element]
-      elif self.wildcard and (self.wildcard in node[1]):
-        node = node[1][self.wildcard]
+      h = hash(element)
+      if h in node[1]:
+        node = node[1][h]
+      elif self.__wildcard and (self.__wildcard in node[1]):
+        node = node[1][self.__wildcard]
       else:
         return default
     return node[0]
@@ -59,9 +63,9 @@ class PrefixTree(object):
     """
     if value == None:
       raise ValueError, 'None is not a valid value'
-    node = self.root
+    node = self.__root
     for element in key:
-      node = node[1].setdefault(element, [None, {}])
+      node = node[1].setdefault(hash(element), [None, {}])
     node[0] = value
   
   def __contains__(self, key):
