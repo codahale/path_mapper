@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-import unittest
+import sys, unittest
 from helpers import test
+from pprint import pprint
 
 from path_mapper.prefix_tree import PrefixTree
 
@@ -51,6 +52,15 @@ class PrefixTreeTests(unittest.TestCase):
       self.fail("should have raised a ValueError but didn't")
     except ValueError, e:
       self.assertEqual('None is not a valid value', e.message)
+  
+  @test
+  def should_generally_do_what_i_want(self):
+    self.tree[('home',)] = '/home'
+    self.tree['home', '?'] = '/home/:action'
+    self.tree[('?',)] = '/:controller'
+    self.tree['?', '?'] = '/:controller/:action'
+    self.assertEqual('/:controller/:action', self.tree.get('dingo/majesty'.split('/')))
+    self.assertEqual('/home', self.tree.get('home'.split('/')))
   
   
 def suite():
