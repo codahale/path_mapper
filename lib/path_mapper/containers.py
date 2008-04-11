@@ -79,12 +79,14 @@ class PrefixTree(object):
       Returns the value associated with the key, or sets it to default and
       returns default.
     """
-    # OPTIMIZE: This could be done in O(m) instead of O(2m)
-    if key in self:
-      return self[key]
-    else:
-      self[key] = default
-      return default
+    if default == None:
+      raise ValueError, 'None is not a valid default'
+    node = self.__root
+    for element in key:
+      node = node[1].setdefault(hash(element), [None, {}])
+    if node[0] == None:
+      node[0] = default
+    return node[0]
   
 
 class ListTree(PrefixTree):
@@ -98,3 +100,4 @@ class ListTree(PrefixTree):
       appends value to it.
     """
     return self.setdefault(key, []).append(value)
+  

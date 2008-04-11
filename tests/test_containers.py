@@ -65,7 +65,16 @@ class PrefixTreeTests(unittest.TestCase):
   def should_set_default(self):
     self.assertEqual([], self.tree.setdefault('dingo', []))
     self.tree.setdefault('dingo', []).append(1)
-    self.assertEqual([1], self.tree['dingo'])
+    self.tree.setdefault('dingo', []).append(2)
+    self.assertEqual([1, 2], self.tree['dingo'])
+  
+  @test
+  def should_raise_error_on_setting_None_as_default(self):
+    try:
+      self.tree.setdefault('yay', None)
+      self.fail("should have raised a ValueError but didn't")
+    except ValueError, e:
+      self.assertEqual('None is not a valid default', e.message)
   
   @test
   def should_generally_do_what_i_want(self):
