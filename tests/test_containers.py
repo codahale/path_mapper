@@ -4,7 +4,7 @@ import sys, unittest
 from helpers import test
 from pprint import pprint
 
-from path_mapper.prefix_tree import PrefixTree
+from path_mapper.containers import PrefixTree, ListTree
 
 class PrefixTreeTests(unittest.TestCase):
   def setUp(self):
@@ -68,9 +68,25 @@ class PrefixTreeTests(unittest.TestCase):
     self.assertEqual('/:controller/:action', self.tree.get('dingo/majesty'.split('/')))
     self.assertEqual('/home', self.tree.get('home'.split('/')))
   
+class ListTreeTests(unittest.TestCase):
+  def setUp(self):
+    self.tree = ListTree()
+  
+  @test
+  def should_add_elements_to_a_list(self):
+    self.tree.add('dingo', 1)
+    self.tree.add('dingo', 2)
+    self.tree.add('dingo', 3)
+    self.assertEqual([1, 2, 3], self.tree['dingo'])
+    
   
 def suite():
-  return unittest.makeSuite(PrefixTreeTests)
+  return unittest.TestSuite(
+    [
+      unittest.makeSuite(PrefixTreeTests),
+      unittest.makeSuite(ListTreeTests)
+    ]
+  )
 
 if __name__ == '__main__':
   unittest.main()
