@@ -88,6 +88,9 @@ class PrefixTree(object):
   
 
 class ListTree(PrefixTree):
+  def __init__(self, wildcard='?'):
+    super(ListTree, self).__init__(wildcard=wildcard)
+  
   def add(self, key, value):
     """
       If there is no value in the tree associated with the key, associates it
