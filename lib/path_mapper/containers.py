@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 """
-  A module containing PrefixTree.
+  Advanced container classes of high magic and awesomeness.
 """
 
 class PrefixTree(object):
