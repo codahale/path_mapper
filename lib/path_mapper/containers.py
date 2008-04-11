@@ -23,7 +23,6 @@ class PrefixTree(object):
       self.__wildcard = hash(wildcard)
     else:
       self.__wildcard = None
-    self.__empty_node = None
   
   def get(self, key, default=None):
     """
