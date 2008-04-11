@@ -74,3 +74,15 @@ class PrefixTree(object):
     """
     return self.get(key) != None
   
+  def setdefault(self, key, default):
+    """
+      Returns the value associated with the key, or sets it to default and
+      returns default.
+    """
+    # OPTIMIZE: This could be done in O(m) instead of O(2m)
+    if key in self:
+      return self[key]
+    else:
+      self[key] = default
+      return default
+  

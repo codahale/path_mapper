@@ -54,6 +54,12 @@ class PrefixTreeTests(unittest.TestCase):
       self.assertEqual('None is not a valid value', e.message)
   
   @test
+  def should_set_default(self):
+    self.assertEqual([], self.tree.setdefault('dingo', []))
+    self.tree.setdefault('dingo', []).append(1)
+    self.assertEqual([1], self.tree['dingo'])
+  
+  @test
   def should_generally_do_what_i_want(self):
     self.tree[('home',)] = '/home'
     self.tree['home', '?'] = '/home/:action'
