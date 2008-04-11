@@ -51,7 +51,7 @@ class PrefixTree(object):
       Returns the value associated with the key, or raises a KeyError if none
       exists.
     """
-    value = self.get(key)
+    value = self.get(key, default=None)
     if value == None:
       raise KeyError, key
     else:
@@ -72,7 +72,7 @@ class PrefixTree(object):
     """
       Returns True if key exists in the tree, False otherwise.
     """
-    return self.get(key) != None
+    return self.get(key, default=None) != None
   
   def setdefault(self, key, default):
     """
