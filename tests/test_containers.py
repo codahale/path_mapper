@@ -16,6 +16,14 @@ class PrefixTreeTests(unittest.TestCase):
     self.assertEqual(300, self.tree['blah'])
   
   @test
+  def should_return_None_for_missing_values(self):
+    self.assertEqual(None, self.tree.get('blah'))
+  
+  @test
+  def should_return_default_for_missing_values(self):
+    self.assertEqual([], self.tree.get('blah', []))
+  
+  @test
   def should_get_set_values_with_wildcards(self):
     self.tree['bla?ee'] = 400
     self.assertEqual(400, self.tree['blaoee'])
