@@ -4,6 +4,8 @@
   Advanced container classes of high magic and awesomeness.
 """
 
+import warnings
+
 class PrefixTree(object):
   """
     A prefix tree (a.k.a. "trie") implementation which supports wildcard
@@ -100,4 +102,47 @@ class ListTree(PrefixTree):
       appends value to it.
     """
     return self.setdefault(key, []).append(value)
+  
+class RouteList(list):
+  """
+    A simple array of Routes. O(n) matching.
+  """
+  
+  def add(self, route):
+    """
+      Appends route to the end of the list.
+    """
+    self.append(route)
+  
+  def match(self, path):
+    """
+      Returns the first route which matches path. Returns False if no routes
+      match. O(n).
+    """
+    for route in self:
+      if route.match(path):
+        return route
+    return False
+  
+
+class RouteDict(dict):
+  """
+    A hash-table dictionary of Routes. O(1) matching.
+  """
+  
+  def add(self, route):
+    """
+      Adds route to the dictionary. If route is already in the dictionary, drops
+      the route while issuing a warning.
+    """
+    if route.paths() in self:
+      warnings.warn('Route collision: %s was dropped' % repr(route))
+    else:
+      self[route.paths()] = route
+  
+  def match(self, path):
+    """
+      Returns the rotue which matches path. Returns False if no route matches.
+    """
+    return self.get(path, False)
   
