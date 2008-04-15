@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-from urlparse import urldefrag, urljoin
-
 class Route(object):
   """
     An abstract class wrapping the basics of path matching. Routes do two
