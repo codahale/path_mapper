@@ -4,7 +4,7 @@ import sys, unittest, warnings
 from helpers import test
 from pprint import pprint
 
-from path_mapper.containers import PrefixTree, ListTree, RouteList, RouteDict
+from path_mapper.containers import PrefixTree, RouteTree, RouteList, RouteDict
 from path_mapper.routes import StaticRoute
 
 class PrefixTreeTests(unittest.TestCase):
@@ -87,17 +87,9 @@ class PrefixTreeTests(unittest.TestCase):
     self.assertEqual('/:controller/:action', self.tree.get('dingo/majesty'.split('/')))
     self.assertEqual('/home', self.tree.get('home'.split('/')))
   
-class ListTreeTests(unittest.TestCase):
-  
-  def setUp(self):
-    self.tree = ListTree()
-  
-  @test
-  def should_add_elements_to_a_list(self):
-    self.tree.add('dingo', 1)
-    self.tree.add('dingo', 2)
-    self.tree.add('dingo', 3)
-    self.assertEqual([1, 2, 3], self.tree['dingo'])
+class RouteTreeTests(unittest.TestCase):
+  # TODO write tests
+  pass
   
 
 class RouteListTests(unittest.TestCase):
@@ -138,7 +130,7 @@ class RouteDictTests(unittest.TestCase):
       old_warn = warnings.warn
       warnings.warn = warn
       self.dict.add(StaticRoute('/home', options={ 'blah': True }))
-      self.assertEqual(["Route collision: <Route path='/home', name=None, options={'blah': True}> was dropped"], self.warnings)
+      self.assertEqual(["Route collision: <Route path='/home', name=None, options={'blah': True}> was dropped for '/home'"], self.warnings)
       self.assertEqual(self.route1, self.dict.match('/home'))
     finally:
       warnings.warn = old_warn
@@ -148,7 +140,7 @@ def suite():
   return unittest.TestSuite(
     [
       unittest.makeSuite(PrefixTreeTests),
-      unittest.makeSuite(ListTreeTests),
+      unittest.makeSuite(RouteTreeTests),
       unittest.makeSuite(RouteListTests),
       unittest.makeSuite(RouteDictTests)
     ]

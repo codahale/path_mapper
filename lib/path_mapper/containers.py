@@ -91,18 +91,19 @@ class PrefixTree(object):
     return node[0]
   
 
-class ListTree(PrefixTree):
+class RouteTree(PrefixTree):
   def __init__(self, wildcard='?'):
     super(ListTree, self).__init__(wildcard=wildcard)
   
-  def add(self, key, value):
-    """
-      If there is no value in the tree associated with the key, associates it
-      with a list containing value. If there is a value associated with the key,
-      appends value to it.
-    """
-    return self.setdefault(key, []).append(value)
+  def add(self, route):
+    # TODO add a real check here -- does paths() make any sense?
+    for path in route.paths():
+      self.setdefault(path, RouteList()).add(route)
   
+  def match(self, path):
+    return self.get(path, RouteList()).match(path)
+  
+
 class RouteList(list):
   """
     A simple array of Routes. O(n) matching.
@@ -135,10 +136,11 @@ class RouteDict(dict):
       Adds route to the dictionary. If route is already in the dictionary, drops
       the route while issuing a warning.
     """
-    if route.paths() in self:
-      warnings.warn('Route collision: %s was dropped' % repr(route))
-    else:
-      self[route.paths()] = route
+    for path in route.paths():
+      if path in self:
+        warnings.warn('Route collision: %s was dropped for %s' % (repr(route), repr(path)))
+      else:
+        self[path] = route
   
   def match(self, path):
     """
