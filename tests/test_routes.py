@@ -26,7 +26,7 @@ class StaticRouteTests(unittest.TestCase):
   
   @test
   def should_have_paths(self):
-    self.assertEqual('/home', self.route.paths())
+    self.assertEqual(('/home',), self.route.paths())
   
 
 def suite():

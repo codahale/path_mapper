@@ -36,7 +36,7 @@ class Route(object):
   
   def paths(self):
     """
-      Returns a path or set of paths which this route should respond to.
+      Returns a set of paths which this route should respond to.
     """
     raise NotImplementedError, 'Route is an abstract class.'
   
@@ -61,5 +61,5 @@ class StaticRoute(Route):
       Returns the route's path. Use a dictionary table for (potentially) O(n)
       win.
     """
-    return self.path
+    return (self.path,)
   
