@@ -10,8 +10,7 @@ class PathMapper(object):
     self.static_patterns = dict()
   
   def connect(self, pattern, options):
-    if self.__is_static_pattern(pattern):
-      self.static_patterns[pattern] = options
+    self.static_patterns[pattern] = options
   
   def parse(self, path):
     result = self.static_patterns.get(path, None)
@@ -20,5 +19,3 @@ class PathMapper(object):
     else:
       raise NotFoundError('%s not found' % path)
   
-  def __is_static_pattern(self, pattern):
-    return True
