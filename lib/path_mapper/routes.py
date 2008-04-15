@@ -24,6 +24,10 @@ class Route(object):
     else:
       self.options = dict()
   
+  def __repr__(self):
+    return '<Route path=%s, name=%s, options=%s>' % (repr(self.path), repr(self.name), repr(self.options))
+
+  
   def match(self, path):
     """
       Returns True if path matches the route. Returns False, otherwise.
