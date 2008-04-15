@@ -2,12 +2,13 @@
 # -*- coding: utf8 -*-
 import unittest
 
-import test_path_mapper, test_containers
+import test_path_mapper, test_containers, test_routes
 
 def test_suite():
   return unittest.TestSuite((
     test_path_mapper.suite(),
-    test_containers.suite()
+    test_containers.suite(),
+    test_routes.suite()
   ))
 
 if __name__ == '__main__':
