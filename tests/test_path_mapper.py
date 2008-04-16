@@ -17,11 +17,7 @@ class PathMapperTests(unittest.TestCase):
   
   @test
   def should_raise_an_exception_if_parsing_an_unknown_static(self):
-    try:
-      self.path_mapper.parse('/dingo')
-      self.fail('Should have raised a PathNotFoundError')
-    except NotFoundError, e:
-      self.assertEqual('/dingo not found', e.message)
+    self.assertRaises(NotFoundError, self.path_mapper.parse, '/dingo')
   
 def suite():
   return unittest.makeSuite(PathMapperTests)

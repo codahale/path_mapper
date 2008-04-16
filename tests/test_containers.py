@@ -44,10 +44,7 @@ class PrefixTreeTests(unittest.TestCase):
   
   @test
   def should_raise_error_on_missing_key(self):
-    try:
-      self.tree['blah']
-    except KeyError, e:
-      self.assertEqual('blah', e.message)
+    self.assertRaises(KeyError, self.tree.__getitem__, 'blah')
   
   @test
   def should_not_match_on_wildcard_none(self):
@@ -57,11 +54,7 @@ class PrefixTreeTests(unittest.TestCase):
   
   @test
   def should_raise_error_on_setting_None(self):
-    try:
-      self.tree['yay'] = None
-      self.fail("should have raised a ValueError but didn't")
-    except ValueError, e:
-      self.assertEqual('None is not a valid value', e.message)
+    self.assertRaises(ValueError, self.tree.__setitem__, 'yay', None)
   
   @test
   def should_set_default(self):
@@ -72,11 +65,7 @@ class PrefixTreeTests(unittest.TestCase):
   
   @test
   def should_raise_error_on_setting_None_as_default(self):
-    try:
-      self.tree.setdefault('yay', None)
-      self.fail("should have raised a ValueError but didn't")
-    except ValueError, e:
-      self.assertEqual('None is not a valid default', e.message)
+    self.assertRaises(ValueError, self.tree.setdefault, 'yay', None)
   
   @test
   def should_generally_do_what_i_want(self):
