@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-import unittest
+import re, unittest
 from helpers import test
 
-from path_mapper.routes import parse_path, StaticRoute
+from path_mapper.routes import parse_path, make_route, StaticRoute
 
 class ParsingTests(unittest.TestCase):
   
@@ -13,6 +13,22 @@ class ParsingTests(unittest.TestCase):
     self.assertEqual(('home', 'index', 'weeble'), parse_path('/home/index/weeble/'))
     self.assertEqual(('home', 'index', 'weeble'), parse_path('home/index/weeble'))
     self.assertEqual(('home', 'index', 'weeble'), parse_path('home/index/weeble/'))
+  
+
+class RouteMakingTests(unittest.TestCase):
+  
+  @test
+  def should_make_static_routes(self):
+    route = make_route('/home')
+    self.assertTrue(isinstance(route, StaticRoute))
+  
+  @test
+  def should_not_be_able_to_make_component_routes(self):
+    self.assertRaises(NotImplementedError, make_route, '/posts/:id')
+  
+  @test
+  def should_not_be_able_to_make_regex_routes(self):
+    self.assertRaises(NotImplementedError, make_route, re.compile(r'/posts/([\d]{4})/([\d]{2})/([\d]{2})'))
   
 
 class StaticRouteTests(unittest.TestCase):
@@ -38,9 +54,14 @@ class StaticRouteTests(unittest.TestCase):
   def should_have_paths(self):
     self.assertEqual(('/home',), self.route.paths())
   
-
 def suite():
-  return unittest.makeSuite(StaticRouteTests)
+  return unittest.TestSuite(
+    [
+      unittest.makeSuite(ParsingTests),
+      unittest.makeSuite(StaticRouteTests),
+      unittest.makeSuite(RouteMakingTests)
+    ]
+  )
 
 if __name__ == '__main__':
   unittest.main()
