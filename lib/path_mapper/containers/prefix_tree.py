@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-"""
-  Advanced container classes of high magic and awesomeness.
-"""
-
-import warnings
 
 class PrefixTree(object):
   """
@@ -89,62 +84,4 @@ class PrefixTree(object):
     if node[0] == None:
       node[0] = default
     return node[0]
-  
-
-class RouteTree(PrefixTree):
-  def __init__(self, wildcard='?'):
-    super(ListTree, self).__init__(wildcard=wildcard)
-  
-  def add(self, route):
-    # TODO add a real check here -- does paths() make any sense?
-    for path in route.paths():
-      self.setdefault(path, RouteList()).add(route)
-  
-  def match(self, path):
-    return self.get(path, RouteList()).match(path)
-  
-
-class RouteList(list):
-  """
-    A simple array of Routes. O(n) matching.
-  """
-  
-  def add(self, route):
-    """
-      Appends route to the end of the list.
-    """
-    self.append(route)
-  
-  def match(self, path):
-    """
-      Returns the first route which matches path. Returns False if no routes
-      match. O(n).
-    """
-    for route in self:
-      if route.match(path):
-        return route
-    return False
-  
-
-class RouteDict(dict):
-  """
-    A hash-table dictionary of Routes. O(1) matching.
-  """
-  
-  def add(self, route):
-    """
-      Adds route to the dictionary. If route is already in the dictionary, drops
-      the route while issuing a warning.
-    """
-    for path in route.paths():
-      if path in self:
-        warnings.warn('Route collision: %s was dropped for %s' % (repr(route), repr(path)))
-      else:
-        self[path] = route
-  
-  def match(self, path):
-    """
-      Returns the rotue which matches path. Returns False if no route matches.
-    """
-    return self.get(path, False)
   
