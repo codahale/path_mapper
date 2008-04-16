@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
+from path_mapper.routes import parse_path
 from prefix_tree import PrefixTree
 from route_list import RouteList
 
@@ -11,9 +12,9 @@ class RouteTree(PrefixTree):
   def add(self, route):
     # TODO add a real check here -- does paths() make any sense?
     for path in route.paths():
-      self.setdefault(path, RouteList()).add(route)
+      self.setdefault(parse_path(path), RouteList()).add(route)
   
   def match(self, path):
-    return self.get(path, RouteList()).match(path)
+    return self.get(parse_path(path), RouteList()).match(path)
   
 
