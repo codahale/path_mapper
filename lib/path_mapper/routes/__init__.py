@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 from abstract_route import AbstractRoute
-from static_route import StaticRoute
+from static_route   import StaticRoute
 
 def parse_path(path):
   """

@@ -2,8 +2,8 @@
 # -*- coding: utf8 -*-
 
 from path_mapper.routes import parse_path
-from prefix_tree import PrefixTree
-from route_list import RouteList
+from prefix_tree        import PrefixTree
+from route_list         import RouteList
 
 class RouteTree(PrefixTree):
   """
