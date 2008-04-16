@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 
 from prefix_tree import PrefixTree
+from route_list import RouteList
 
 class RouteTree(PrefixTree):
   def __init__(self, wildcard='?'):
