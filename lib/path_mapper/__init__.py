@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-class NotFoundError(Exception): pass
-
+from errors import NotFoundError
 
 class PathMapper(object):
   def __init__(self):
