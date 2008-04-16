@@ -11,6 +11,7 @@ class StaticRoute(AbstractRoute):
   
   def __init__(self, path, name=None, options=None):
     super(StaticRoute, self).__init__(path, name=name, options=options)
+    self.static = True
   
   def match(self, path):
     """

@@ -15,6 +15,7 @@ class AbstractRoute(object):
   
   def __init__(self, path, name=None, options=None):
     super(AbstractRoute, self).__init__()
+    self.static = False
     self.path = path
     self.name = name
     if options:
@@ -24,7 +25,6 @@ class AbstractRoute(object):
   
   def __repr__(self):
     return '<Route path=%s, name=%s, options=%s>' % (repr(self.path), repr(self.name), repr(self.options))
-
   
   def match(self, path):
     """
