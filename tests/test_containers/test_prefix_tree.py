@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
-import sys, unittest, warnings
+import unittest
 from helpers import test
-from pprint import pprint
 
-from path_mapper.containers import PrefixTree, RouteTree, RouteList, RouteDict
-from path_mapper.routes import StaticRoute
+from path_mapper.containers import PrefixTree
 
 class PrefixTreeTests(unittest.TestCase):
   
@@ -76,64 +74,11 @@ class PrefixTreeTests(unittest.TestCase):
     self.assertEqual('/:controller/:action', self.tree.get('dingo/majesty'.split('/')))
     self.assertEqual('/home', self.tree.get('home'.split('/')))
   
-class RouteTreeTests(unittest.TestCase):
-  # TODO write tests
-  pass
-  
-
-class RouteListTests(unittest.TestCase):
-  
-  def setUp(self):
-    self.route1 = StaticRoute('/home')
-    self.route2 = StaticRoute('/home/about', name='Primero')
-    self.route3 = StaticRoute('/home/about', name='Segundo')
-    self.list = RouteList()
-    self.list.add(self.route1)
-    self.list.add(self.route2)
-    self.list.add(self.route3)
-  
-  @test
-  def should_match_first_route(self):
-    self.assertEqual(self.route2, self.list.match('/home/about'))
-  
-
-class RouteDictTests(unittest.TestCase):
-  
-  def setUp(self):
-    self.route1 = StaticRoute('/home')
-    self.route2 = StaticRoute('/home/about', name='Primero')
-    self.dict = RouteDict()
-    self.dict.add(self.route1)
-    self.dict.add(self.route2)
-  
-  @test
-  def should_match_routes(self):
-    self.assertEqual(self.route1, self.dict.match('/home'))
-  
-  @test
-  def should_warn_and_drop_on_path_collision(self):
-    self.warnings = list()
-    def warn(msg):
-      self.warnings.append(msg)
-    try:
-      old_warn = warnings.warn
-      warnings.warn = warn
-      self.dict.add(StaticRoute('/home', options={ 'blah': True }))
-      self.assertEqual(["Route collision: <Route path='/home', name=None, options={'blah': True}> was dropped for '/home'"], self.warnings)
-      self.assertEqual(self.route1, self.dict.match('/home'))
-    finally:
-      warnings.warn = old_warn
-  
 
 def suite():
   return unittest.TestSuite(
     [
-      unittest.makeSuite(PrefixTreeTests),
-      unittest.makeSuite(RouteTreeTests),
-      unittest.makeSuite(RouteListTests),
-      unittest.makeSuite(RouteDictTests)
+      unittest.makeSuite(PrefixTreeTests)
     ]
   )
 
-if __name__ == '__main__':
-  unittest.main()

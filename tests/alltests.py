@@ -4,7 +4,8 @@ import unittest
 
 import test_path_mapper, test_containers, test_routes
 
-def test_suite():
+
+def suite():
   return unittest.TestSuite((
     test_path_mapper.suite(),
     test_containers.suite(),
@@ -12,4 +13,4 @@ def test_suite():
   ))
 
 if __name__ == '__main__':
-  unittest.main(defaultTest='test_suite')
+  unittest.main(defaultTest='suite')
