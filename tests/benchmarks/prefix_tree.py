@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 import random, string, sys
 sys.path.insert(0, 'lib')
-from path_mapper.prefix_tree import PrefixTree
+from path_mapper.containers import PrefixTree
 
 random.seed = 0xDEADBEEF
 random_values = list()
